@@ -1,14 +1,25 @@
+<script>
+	import Store from "$lib/Store.svelte"
+	import * as data from "$lib/data.js"
+	let loaded = false
+
+	$: stores = loaded ? data.stores : data.stores.slice(0,3)
+</script>
+
 <h1>Nearby Stores</h1>
 
-<div class="store">
-	<h3>Starbucks</h3>
-</div>
+{#each stores as store}
+	<Store {...store} />
+{/each}
+
+{#if !loaded}
+	<p>
+		<button on:click={() => (loaded = true)}>Load more</button>
+	</p>
+{/if}
 
 <style>
-	.store {
-		height: 120px;
-		background-color: rgb(135,178,68);
-		padding: 0.5em;
-		border-radius: 5px;
+	p {
+		text-align: center;
 	}
 </style>
